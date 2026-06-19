@@ -1,0 +1,29 @@
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Environment variables
+.env
+.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+
+# Testing / coverage
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Logs
+*.log
+logs/
