@@ -10,6 +10,8 @@ class Settings(BaseSettings):
     GOOGLE_CLIENT_ID: Optional[str] = None
     GOOGLE_CLIENT_SECRET: Optional[str] = None
     ENVIRONMENT: str = "development"
+    # "/api" for local dev; empty string on Vercel (Services adds /api routePrefix)
+    API_PREFIX: str = "/api"
 
     class Config:
         env_file = ".env"

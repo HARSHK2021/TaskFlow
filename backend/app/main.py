@@ -4,8 +4,14 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
+from app.config import settings
 from app.database.connection import connect_to_mongo, close_mongo_connection
 from app.routes import auth, tasks, habits, analytics, profile
+
+
+def _route_prefix(segment: str) -> str:
+    prefix = settings.API_PREFIX.strip("/")
+    return f"/{prefix}/{segment}" if prefix else f"/{segment}"
 
 
 @asynccontextmanager
@@ -30,11 +36,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
-app.include_router(tasks.router, prefix="/tasks", tags=["Tasks"])
-app.include_router(habits.router, prefix="/habits", tags=["Habits"])
-app.include_router(analytics.router, prefix="/analytics", tags=["Analytics"])
-app.include_router(profile.router, prefix="/profile", tags=["Profile"])
+app.include_router(auth.router, prefix=_route_prefix("auth"), tags=["Authentication"])
+app.include_router(tasks.router, prefix=_route_prefix("tasks"), tags=["Tasks"])
+app.include_router(habits.router, prefix=_route_prefix("habits"), tags=["Habits"])
+app.include_router(analytics.router, prefix=_route_prefix("analytics"), tags=["Analytics"])
+app.include_router(profile.router, prefix=_route_prefix("profile"), tags=["Profile"])
 
 @app.get("/")
 async def root():
